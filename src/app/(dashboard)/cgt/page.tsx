@@ -5,13 +5,13 @@ import { DashboardTopbar } from '@/components/DashboardTopbar'
 import { ResultBox, ResultRow } from '@/components/ui/ResultBox'
 
 const S = {
-  card: { background: 'white', borderRadius: 16, padding: '24px', border: '1px solid rgba(15,30,60,0.1)', marginBottom: 16 } as React.CSSProperties,
-  label: { display: 'block', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(15,30,60,0.5)', marginBottom: 6 },
-  sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(15,30,60,0.4)', marginBottom: 16 },
-  input: { width: '100%', padding: '10px 14px', border: '1px solid rgba(15,30,60,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#0F1E3C', outline: 'none', boxSizing: 'border-box' as const },
-  inputPrefix: { width: '100%', paddingLeft: 28, paddingRight: 14, paddingTop: 10, paddingBottom: 10, border: '1px solid rgba(15,30,60,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#0F1E3C', outline: 'none', boxSizing: 'border-box' as const },
-  prefix: { position: 'absolute' as const, left: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(15,30,60,0.4)', fontSize: 13, pointerEvents: 'none' as const },
-  suffix: { position: 'absolute' as const, right: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(15,30,60,0.4)', fontSize: 13, pointerEvents: 'none' as const },
+  card: { background: 'white', borderRadius: 16, padding: '24px', border: '1px solid rgba(26,47,26,0.1)', marginBottom: 16 } as React.CSSProperties,
+  label: { display: 'block', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(26,47,26,0.5)', marginBottom: 6 },
+  sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(26,47,26,0.4)', marginBottom: 16 },
+  input: { width: '100%', padding: '10px 14px', border: '1px solid rgba(26,47,26,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#1A2F1A', outline: 'none', boxSizing: 'border-box' as const },
+  inputPrefix: { width: '100%', paddingLeft: 28, paddingRight: 14, paddingTop: 10, paddingBottom: 10, border: '1px solid rgba(26,47,26,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#1A2F1A', outline: 'none', boxSizing: 'border-box' as const },
+  prefix: { position: 'absolute' as const, left: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(26,47,26,0.4)', fontSize: 13, pointerEvents: 'none' as const },
+  suffix: { position: 'absolute' as const, right: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(26,47,26,0.4)', fontSize: 13, pointerEvents: 'none' as const },
 }
 
 const CURRENT_YEAR = 2025
@@ -106,16 +106,16 @@ export default function CGTPage() {
                     <span style={S.prefix}>$</span>
                     <input type="number" value={taxableIncome} onChange={e => setTaxableIncome(+e.target.value)} step={5000} style={S.inputPrefix} />
                   </div>
-                  <div style={{ marginTop: 6, fontSize: 11, color: '#065F46', background: 'rgba(0,212,170,0.08)', padding: '5px 10px', borderRadius: 8 }}>
+                  <div style={{ marginTop: 6, fontSize: 11, color: '#065F46', background: 'rgba(201,150,58,0.08)', padding: '5px 10px', borderRadius: 8 }}>
                     Marginal rate: <strong>{fmtPct(marginalRate * 100, 0)}</strong> · Held {yearsHeld} years so far
                   </div>
                 </div>
               </div>
             </div>
 
-            <div style={{ ...S.card, background: '#0F1E3C' }}>
-              <div style={{ fontSize: 10, fontFamily: 'monospace', color: '#00D4AA', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>Best outcome</div>
-              <div style={{ fontFamily: 'monospace', fontSize: 24, fontWeight: 700, color: '#00D4AA', marginBottom: 4 }}>{fmtCurrency(bestYear.netProceeds)}</div>
+            <div style={{ ...S.card, background: '#1A2F1A' }}>
+              <div style={{ fontSize: 10, fontFamily: 'monospace', color: '#C9963A', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>Best outcome</div>
+              <div style={{ fontFamily: 'monospace', fontSize: 24, fontWeight: 700, color: '#C9963A', marginBottom: 4 }}>{fmtCurrency(bestYear.netProceeds)}</div>
               <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
                 Net proceeds selling in <strong style={{ color: 'white' }}>{bestYear.year}</strong> ({bestYear.totalYears} yr hold)
               </div>
@@ -129,9 +129,9 @@ export default function CGTPage() {
               <div style={{ overflowX: 'auto' }}>
                 <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                   <thead>
-                    <tr style={{ borderBottom: '1px solid rgba(15,30,60,0.08)' }}>
+                    <tr style={{ borderBottom: '1px solid rgba(26,47,26,0.08)' }}>
                       {['Sell in', 'Hold', 'Sale value', 'Capital gain', '50% disc?', 'CGT payable', 'Net proceeds'].map(h => (
-                        <th key={h} style={{ padding: '8px 12px', textAlign: 'right', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(15,30,60,0.4)', whiteSpace: 'nowrap' as const }}>
+                        <th key={h} style={{ padding: '8px 12px', textAlign: 'right', fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(26,47,26,0.4)', whiteSpace: 'nowrap' as const }}>
                           {h}
                         </th>
                       ))}
@@ -141,16 +141,16 @@ export default function CGTPage() {
                     {scenarios.map(s => {
                       const isBest = s.year === bestYear.year
                       return (
-                        <tr key={s.year} style={{ borderBottom: '1px solid rgba(15,30,60,0.05)', background: isBest ? 'rgba(0,212,170,0.05)' : 'transparent' }}>
-                          <td style={{ padding: '10px 12px', fontWeight: isBest ? 700 : 500, color: isBest ? '#00A888' : '#0F1E3C', fontSize: 13, textAlign: 'right' }}>
+                        <tr key={s.year} style={{ borderBottom: '1px solid rgba(26,47,26,0.05)', background: isBest ? 'rgba(201,150,58,0.05)' : 'transparent' }}>
+                          <td style={{ padding: '10px 12px', fontWeight: isBest ? 700 : 500, color: isBest ? '#A67C2E' : '#1A2F1A', fontSize: 13, textAlign: 'right' }}>
                             {s.year} {isBest && '⭐'}
                           </td>
-                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 12, color: 'rgba(15,30,60,0.5)', textAlign: 'right' }}>{s.totalYears}yr</td>
-                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 13, color: '#0F1E3C', textAlign: 'right' }}>{fmtCurrency(s.saleValue)}</td>
-                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 13, color: '#00A888', textAlign: 'right' }}>{fmtCurrency(s.gain)}</td>
+                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 12, color: 'rgba(26,47,26,0.5)', textAlign: 'right' }}>{s.totalYears}yr</td>
+                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 13, color: '#1A2F1A', textAlign: 'right' }}>{fmtCurrency(s.saleValue)}</td>
+                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 13, color: '#A67C2E', textAlign: 'right' }}>{fmtCurrency(s.gain)}</td>
                           <td style={{ padding: '10px 12px', textAlign: 'center', fontSize: 13 }}>{s.discounted ? '✓' : '✗'}</td>
                           <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 13, color: '#EF4444', textAlign: 'right' }}>–{fmtCurrency(s.cgtPayable)}</td>
-                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 13, fontWeight: isBest ? 700 : 500, color: isBest ? '#00A888' : '#0F1E3C', textAlign: 'right' }}>
+                          <td style={{ padding: '10px 12px', fontFamily: 'monospace', fontSize: 13, fontWeight: isBest ? 700 : 500, color: isBest ? '#A67C2E' : '#1A2F1A', textAlign: 'right' }}>
                             {fmtCurrency(s.netProceeds)}
                           </td>
                         </tr>
@@ -170,11 +170,11 @@ export default function CGTPage() {
                 <ResultRow label="Cost base" value={fmtCurrency(costBase)} highlight />
                 <ResultRow label="Current loan balance" value={fmtCurrency(loanBalance)} accent="red" />
                 <ResultRow label="Years held" value={`${yearsHeld} years`} />
-                <ResultRow label="50% CGT discount eligible" value={yearsHeld >= 1 ? '✓ Yes (held > 12 months)' : '✗ Not yet'} accent={yearsHeld >= 1 ? 'teal' : 'red'} />
+                <ResultRow label="50% CGT discount eligible" value={yearsHeld >= 1 ? '✓ Yes (held > 12 months)' : '✗ Not yet'} accent={yearsHeld >= 1 ? 'gold' : 'red'} />
               </ResultBox>
             </div>
 
-            <p style={{ fontSize: 11, color: 'rgba(15,30,60,0.35)', textAlign: 'center' }}>
+            <p style={{ fontSize: 11, color: 'rgba(26,47,26,0.35)', textAlign: 'center' }}>
               Estimates only. Does not account for main residence exemption, prior capital losses, or other CGT events. Consult a registered tax agent.
             </p>
           </div>

@@ -4,26 +4,37 @@
 :root {
   --font-dm-sans: 'DM Sans', sans-serif;
   --font-dm-mono: 'DM Mono', monospace;
+
+  /* SmartProperty brand tokens */
+  --forest:        #1A2F1A;
+  --forest-mid:    #243524;
+  --forest-light:  #2E4A2E;
+  --gold:          #C9963A;
+  --gold-dim:      #A67C2E;
+  --gold-light:    #E8B86D;
+  --cream:         #F7F4EE;
+  --cream-2:       #EDE8DF;
+  --sage:          #7A9B7A;
 }
 
 * { box-sizing: border-box; }
 
 body {
   font-family: var(--font-dm-sans);
-  background-color: #F5F4F0;
-  color: #0F1E3C;
+  background-color: var(--cream);
+  color: var(--forest);
 }
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(15,30,60,0.15); border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(15,30,60,0.25); }
+::-webkit-scrollbar-thumb { background: rgba(26,47,26,0.15); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(26,47,26,0.25); }
 
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   height: 4px;
-  background: #ECEAE4;
+  background: var(--cream-2);
   border-radius: 2px;
   outline: none;
 }
@@ -31,7 +42,7 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  background: #0F1E3C;
+  background: var(--forest);
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid white;

@@ -6,20 +6,20 @@ import { DashboardTopbar } from '@/components/DashboardTopbar'
 import { ResultBox, ResultRow } from '@/components/ui/ResultBox'
 
 const S = {
-  card: { background: 'white', borderRadius: 16, padding: '24px', border: '1px solid rgba(15,30,60,0.1)', marginBottom: 16 } as React.CSSProperties,
-  label: { display: 'block', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(15,30,60,0.5)', marginBottom: 6 },
-  sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(15,30,60,0.4)', marginBottom: 16 },
-  input: { width: '100%', padding: '10px 14px', border: '1px solid rgba(15,30,60,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#0F1E3C', outline: 'none', boxSizing: 'border-box' as const },
-  inputPrefix: { width: '100%', paddingLeft: 28, paddingRight: 14, paddingTop: 10, paddingBottom: 10, border: '1px solid rgba(15,30,60,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#0F1E3C', outline: 'none', boxSizing: 'border-box' as const },
-  prefix: { position: 'absolute' as const, left: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(15,30,60,0.4)', fontSize: 13, pointerEvents: 'none' as const },
-  suffix: { position: 'absolute' as const, right: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(15,30,60,0.4)', fontSize: 13, pointerEvents: 'none' as const },
+  card: { background: 'white', borderRadius: 16, padding: '24px', border: '1px solid rgba(26,47,26,0.1)', marginBottom: 16 } as React.CSSProperties,
+  label: { display: 'block', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(26,47,26,0.5)', marginBottom: 6 },
+  sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(26,47,26,0.4)', marginBottom: 16 },
+  input: { width: '100%', padding: '10px 14px', border: '1px solid rgba(26,47,26,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#1A2F1A', outline: 'none', boxSizing: 'border-box' as const },
+  inputPrefix: { width: '100%', paddingLeft: 28, paddingRight: 14, paddingTop: 10, paddingBottom: 10, border: '1px solid rgba(26,47,26,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#1A2F1A', outline: 'none', boxSizing: 'border-box' as const },
+  prefix: { position: 'absolute' as const, left: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(26,47,26,0.4)', fontSize: 13, pointerEvents: 'none' as const },
+  suffix: { position: 'absolute' as const, right: 12, top: '50%', transform: 'translateY(-50%)', color: 'rgba(26,47,26,0.4)', fontSize: 13, pointerEvents: 'none' as const },
 }
 
 function Alert({ variant, title, children }: { variant: 'danger' | 'warning' | 'success'; title: string; children: React.ReactNode }) {
   const cfg = {
     danger:  { bg: '#FEF2F2', border: 'rgba(232,93,93,0.25)', color: '#7F1D1D' },
     warning: { bg: '#FFFBEB', border: 'rgba(245,158,11,0.3)', color: '#78350F' },
-    success: { bg: 'rgba(0,212,170,0.08)', border: 'rgba(0,212,170,0.25)', color: '#065F46' },
+    success: { bg: 'rgba(201,150,58,0.08)', border: 'rgba(201,150,58,0.25)', color: '#065F46' },
   }[variant]
   return (
     <div style={{ background: cfg.bg, border: `1px solid ${cfg.border}`, borderRadius: 12, padding: '12px 16px', marginBottom: 16, display: 'flex', gap: 10 }}>
@@ -150,8 +150,8 @@ Explain why this property is ${isNeg ? 'negatively geared' : 'positively geared'
                     {(['IO', 'PI'] as const).map(t => (
                       <button key={t} onClick={() => setStr('loanType')(t)}
                         style={{ flex: 1, padding: '10px', borderRadius: 10, fontSize: 13, fontWeight: 600, cursor: 'pointer', border: 'none',
-                          background: inputs.loanType === t ? '#0F1E3C' : '#F5F4F0',
-                          color: inputs.loanType === t ? '#00D4AA' : 'rgba(15,30,60,0.6)',
+                          background: inputs.loanType === t ? '#1A2F1A' : '#F7F4EE',
+                          color: inputs.loanType === t ? '#C9963A' : 'rgba(26,47,26,0.6)',
                         }}>
                         {t === 'IO' ? 'Interest Only' : 'P&I'}
                       </button>
@@ -236,7 +236,7 @@ Explain why this property is ${isNeg ? 'negatively geared' : 'positively geared'
                     <span style={S.prefix}>$</span>
                     <input type="number" value={inputs.taxableIncome} onChange={e => set('taxableIncome')(+e.target.value)} step={5000} style={S.inputPrefix} />
                   </div>
-                  <div style={{ marginTop: 6, fontSize: 11, color: '#065F46', background: 'rgba(0,212,170,0.08)', padding: '5px 10px', borderRadius: 8 }}>
+                  <div style={{ marginTop: 6, fontSize: 11, color: '#065F46', background: 'rgba(201,150,58,0.08)', padding: '5px 10px', borderRadius: 8 }}>
                     Marginal rate: <strong>{marginalPct}</strong> (incl. Medicare levy)
                   </div>
                 </div>
@@ -289,10 +289,10 @@ Explain why this property is ${isNeg ? 'negatively geared' : 'positively geared'
                 { label: 'LVR', value: fmtPct(results.lvr), accent: results.lvr <= 80, sub: `Loan ${fmtCurrency(inputs.purchasePrice * (1 - inputs.depositPercent / 100))}` },
                 { label: 'ATO refund', value: fmtCurrency(results.taxRefund), accent: true, sub: 'per year' },
               ].map(m => (
-                <div key={m.label} style={{ background: 'white', borderRadius: 14, padding: '16px 18px', border: '1px solid rgba(15,30,60,0.1)' }}>
-                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(15,30,60,0.4)', marginBottom: 6 }}>{m.label}</div>
-                  <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: m.accent ? '#00A888' : '#EF4444', letterSpacing: '-0.02em' }}>{m.value}</div>
-                  <div style={{ fontSize: 10, color: 'rgba(15,30,60,0.4)', marginTop: 3 }}>{m.sub}</div>
+                <div key={m.label} style={{ background: 'white', borderRadius: 14, padding: '16px 18px', border: '1px solid rgba(26,47,26,0.1)' }}>
+                  <div style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.06em', color: 'rgba(26,47,26,0.4)', marginBottom: 6 }}>{m.label}</div>
+                  <div style={{ fontFamily: 'monospace', fontSize: 20, fontWeight: 700, color: m.accent ? '#A67C2E' : '#EF4444', letterSpacing: '-0.02em' }}>{m.value}</div>
+                  <div style={{ fontSize: 10, color: 'rgba(26,47,26,0.4)', marginTop: 3 }}>{m.sub}</div>
                 </div>
               ))}
             </div>
@@ -301,18 +301,18 @@ Explain why this property is ${isNeg ? 'negatively geared' : 'positively geared'
             <div style={S.card}>
               <div style={S.sectionLabel}>Annual cash flow breakdown</div>
               <ResultBox>
-                <ResultRow label="Gross rental income" value={fmtCurrency(results.grossRentalIncome)} accent="teal" />
+                <ResultRow label="Gross rental income" value={fmtCurrency(results.grossRentalIncome)} accent="gold" />
                 <ResultRow label="Total expenses" value={`–${fmtCurrency(results.totalExpenses)}`} accent="red" />
                 <ResultRow label="Net rental income" value={fmtCurrency(results.netRentalIncome)} />
                 <ResultRow label="Interest expense" value={`–${fmtCurrency(results.interestExpense)}`} accent="red" />
                 {inputs.loanType === 'PI' && <ResultRow label="Principal repayment" value={`–${fmtCurrency(results.principalRepayment)}`} />}
-                <ResultRow label="Pre-tax cash flow" value={fmtCurrency(results.preTaxCashFlow)} highlight accent={results.preTaxCashFlow >= 0 ? 'teal' : 'red'} />
+                <ResultRow label="Pre-tax cash flow" value={fmtCurrency(results.preTaxCashFlow)} highlight accent={results.preTaxCashFlow >= 0 ? 'gold' : 'red'} />
                 <div style={{ borderTop: '1px dashed rgba(255,255,255,0.1)', margin: '8px 0 4px' }} />
                 <ResultRow label={`Bldg depreciation (Div 43)`} value={`–${fmtCurrency(inputs.buildingDepreciation)}`} />
                 <ResultRow label="Plant dep. (Div 40)" value={`–${fmtCurrency(inputs.contentDepreciation)}`} />
-                <ResultRow label={isNeg ? 'Rental loss (deductible)' : 'Taxable rental profit'} value={fmtCurrency(Math.abs(results.taxableRentalLoss))} accent={isNeg ? 'teal' : 'amber'} />
-                <ResultRow label="ATO tax refund" value={fmtCurrency(results.taxRefund)} accent="teal" />
-                <ResultRow label="After-tax cash flow" value={`${fmtCurrency(results.afterTaxCashFlow)}/yr`} highlight accent={results.afterTaxCashFlow >= 0 ? 'teal' : 'red'} />
+                <ResultRow label={isNeg ? 'Rental loss (deductible)' : 'Taxable rental profit'} value={fmtCurrency(Math.abs(results.taxableRentalLoss))} accent={isNeg ? 'gold' : 'amber'} />
+                <ResultRow label="ATO tax refund" value={fmtCurrency(results.taxRefund)} accent="gold" />
+                <ResultRow label="After-tax cash flow" value={`${fmtCurrency(results.afterTaxCashFlow)}/yr`} highlight accent={results.afterTaxCashFlow >= 0 ? 'gold' : 'red'} />
               </ResultBox>
             </div>
 
@@ -332,7 +332,7 @@ Explain why this property is ${isNeg ? 'negatively geared' : 'positively geared'
                 <ResultBox>
                   <ResultRow label="Gross yield" value={fmtPct(results.grossYield)} />
                   <ResultRow label="Net yield" value={fmtPct(results.netYield)} />
-                  <ResultRow label="Cash-on-cash return" value={fmtPct(results.cashOnCashReturn)} accent={results.cashOnCashReturn >= 0 ? 'teal' : 'red'} />
+                  <ResultRow label="Cash-on-cash return" value={fmtPct(results.cashOnCashReturn)} accent={results.cashOnCashReturn >= 0 ? 'gold' : 'red'} />
                   <ResultRow label="Break-even rent" value={`${fmtCurrency(results.breakEvenRent)}/wk`} accent="amber" />
                 </ResultBox>
               </div>
@@ -342,31 +342,31 @@ Explain why this property is ${isNeg ? 'negatively geared' : 'positively geared'
             <div style={{ ...S.card, marginTop: 16 }}>
               <div style={S.sectionLabel}>CGT projection — hold {inputs.holdYears} years at {inputs.capitalGrowthRate}% growth</div>
               <ResultBox>
-                <ResultRow label="Projected value" value={fmtCurrency(results.projectedValue)} accent="teal" />
+                <ResultRow label="Projected value" value={fmtCurrency(results.projectedValue)} accent="gold" />
                 <ResultRow label="Capital gain" value={fmtCurrency(results.capitalGain)} />
-                <ResultRow label="50% CGT discount applied" value={results.cgtDiscountApplied ? '✓ Yes' : '✗ No'} accent={results.cgtDiscountApplied ? 'teal' : 'amber'} />
+                <ResultRow label="50% CGT discount applied" value={results.cgtDiscountApplied ? '✓ Yes' : '✗ No'} accent={results.cgtDiscountApplied ? 'gold' : 'amber'} />
                 <ResultRow label="Taxable gain" value={fmtCurrency(results.taxableGain)} />
                 <ResultRow label="CGT payable" value={`–${fmtCurrency(results.cgtPayable)}`} accent="red" />
-                <ResultRow label="Net sale proceeds" value={fmtCurrency(results.netProceeds)} highlight accent={results.netProceeds >= 0 ? 'teal' : 'red'} />
+                <ResultRow label="Net sale proceeds" value={fmtCurrency(results.netProceeds)} highlight accent={results.netProceeds >= 0 ? 'gold' : 'red'} />
               </ResultBox>
             </div>
 
             {/* AI explanation */}
-            <div style={{ background: '#0F1E3C', borderRadius: 16, padding: '22px', marginTop: 16, border: '1px solid rgba(0,212,170,0.15)' }}>
+            <div style={{ background: '#1A2F1A', borderRadius: 16, padding: '22px', marginTop: 16, border: '1px solid rgba(201,150,58,0.15)' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 12 }}>
                 <div>
-                  <div style={{ fontSize: 12, fontWeight: 700, color: '#00D4AA', marginBottom: 2 }}>⚡ AI Explanation</div>
+                  <div style={{ fontSize: 12, fontWeight: 700, color: '#C9963A', marginBottom: 2 }}>⚡ AI Explanation</div>
                   <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.4)' }}>Plain-English explanation of your specific numbers</div>
                 </div>
                 <button onClick={askAI} disabled={aiLoading}
-                  style={{ padding: '8px 16px', borderRadius: 10, background: aiLoading ? 'rgba(0,212,170,0.3)' : '#00D4AA', color: '#0F1E3C', fontWeight: 700, fontSize: 12, border: 'none', cursor: aiLoading ? 'not-allowed' : 'pointer' }}>
+                  style={{ padding: '8px 16px', borderRadius: 10, background: aiLoading ? 'rgba(201,150,58,0.3)' : '#C9963A', color: '#1A2F1A', fontWeight: 700, fontSize: 12, border: 'none', cursor: aiLoading ? 'not-allowed' : 'pointer' }}>
                   {aiLoading ? 'Thinking…' : aiVisible ? 'Refresh' : 'Explain this property'}
                 </button>
               </div>
               {!aiVisible && <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.4)', margin: 0 }}>Click to get a plain-English explanation of why this property is {isNeg ? 'negatively geared' : 'positively geared'} and what it means for you.</p>}
               {aiVisible && aiLoading && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#00D4AA', fontSize: 13 }}>
-                  <div style={{ width: 14, height: 14, border: '2px solid #00D4AA', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, color: '#C9963A', fontSize: 13 }}>
+                  <div style={{ width: 14, height: 14, border: '2px solid #C9963A', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
                   Analysing your numbers…
                 </div>
               )}
@@ -375,7 +375,7 @@ Explain why this property is ${isNeg ? 'negatively geared' : 'positively geared'
               )}
             </div>
 
-            <p style={{ fontSize: 11, color: 'rgba(15,30,60,0.35)', marginTop: 16, textAlign: 'center' }}>
+            <p style={{ fontSize: 11, color: 'rgba(26,47,26,0.35)', marginTop: 16, textAlign: 'center' }}>
               General information only. Not financial or tax advice. Consult a registered tax agent and licensed financial adviser.
             </p>
           </div>

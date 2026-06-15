@@ -16,8 +16,8 @@ const totalRefund = portfolio.reduce((s, p) => s + p.results.taxRefund, 0)
 const totalProjected = portfolio.reduce((s, p) => s + p.results.projectedValue, 0)
 
 const S = {
-  card: { background: 'white', borderRadius: 16, padding: '24px', border: '1px solid rgba(15,30,60,0.1)' } as React.CSSProperties,
-  sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(15,30,60,0.4)', marginBottom: 16 },
+  card: { background: 'white', borderRadius: 16, padding: '24px', border: '1px solid rgba(26,47,26,0.1)' } as React.CSSProperties,
+  sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(26,47,26,0.4)', marginBottom: 16 },
 }
 
 export default function DashboardPage() {
@@ -37,20 +37,20 @@ export default function DashboardPage() {
           ].map(m => (
             <div key={m.label} style={S.card}>
               <div style={S.sectionLabel}>{m.label}</div>
-              <div style={{ fontFamily: 'monospace', fontSize: 22, fontWeight: 700, color: m.accent ? '#00A888' : '#0F1E3C', letterSpacing: '-0.02em' }}>{m.value}</div>
-              {m.sub && <div style={{ fontSize: 11, color: 'rgba(15,30,60,0.4)', marginTop: 3 }}>{m.sub}</div>}
+              <div style={{ fontFamily: 'monospace', fontSize: 22, fontWeight: 700, color: m.accent ? '#A67C2E' : '#1A2F1A', letterSpacing: '-0.02em' }}>{m.value}</div>
+              {m.sub && <div style={{ fontSize: 11, color: 'rgba(26,47,26,0.4)', marginTop: 3 }}>{m.sub}</div>}
             </div>
           ))}
         </div>
 
         {/* Growth projection */}
-        <div style={{ background: '#0F1E3C', borderRadius: 16, padding: '22px 28px', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
+        <div style={{ background: '#1A2F1A', borderRadius: 16, padding: '22px 28px', marginBottom: 28, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32 }}>
           <div>
-            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#00D4AA', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>10-year projection · avg 6% growth</div>
-            <div style={{ fontFamily: 'monospace', fontSize: 30, fontWeight: 700, color: '#00D4AA', letterSpacing: '-0.03em' }}>{fmtCurrency(totalProjected)}</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9963A', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 6 }}>10-year projection · avg 6% growth</div>
+            <div style={{ fontFamily: 'monospace', fontSize: 30, fontWeight: 700, color: '#C9963A', letterSpacing: '-0.03em' }}>{fmtCurrency(totalProjected)}</div>
             <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>Projected portfolio value · CGT not yet modelled</div>
           </div>
-          <Link href="/cgt" style={{ padding: '12px 20px', borderRadius: 12, background: 'rgba(0,212,170,0.12)', color: '#00D4AA', fontWeight: 700, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap', border: '1px solid rgba(0,212,170,0.2)' }}>
+          <Link href="/cgt" style={{ padding: '12px 20px', borderRadius: 12, background: 'rgba(201,150,58,0.12)', color: '#C9963A', fontWeight: 700, fontSize: 13, textDecoration: 'none', whiteSpace: 'nowrap', border: '1px solid rgba(201,150,58,0.2)' }}>
             Model CGT scenarios →
           </Link>
         </div>
@@ -60,24 +60,24 @@ export default function DashboardPage() {
           <div style={S.card}>
             <div style={{ ...S.sectionLabel, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <span>Properties</span>
-              <Link href="/portfolio" style={{ fontSize: 11, color: '#00A888', textDecoration: 'none', fontWeight: 600 }}>View all →</Link>
+              <Link href="/portfolio" style={{ fontSize: 11, color: '#A67C2E', textDecoration: 'none', fontWeight: 600 }}>View all →</Link>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               {portfolio.map(p => (
-                <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 12px', background: '#F5F4F0', borderRadius: 10 }}>
+                <div key={p.id} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '10px 12px', background: '#F7F4EE', borderRadius: 10 }}>
                   <div>
-                    <div style={{ fontSize: 13, fontWeight: 600, color: '#0F1E3C' }}>{p.name}</div>
-                    <div style={{ fontSize: 11, color: 'rgba(15,30,60,0.45)', marginTop: 1 }}>{p.address}</div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#1A2F1A' }}>{p.name}</div>
+                    <div style={{ fontSize: 11, color: 'rgba(26,47,26,0.45)', marginTop: 1 }}>{p.address}</div>
                   </div>
                   <div style={{ textAlign: 'right' }}>
-                    <div style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: p.results.afterTaxCashFlow >= 0 ? '#00A888' : '#EF4444' }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: 12, fontWeight: 600, color: p.results.afterTaxCashFlow >= 0 ? '#A67C2E' : '#EF4444' }}>
                       {fmtCurrency(p.results.weeklyAfterTaxCashFlow)}/wk
                     </div>
-                    <div style={{ fontSize: 10, color: 'rgba(15,30,60,0.4)', marginTop: 1 }}>{fmtPct(p.results.grossYield)} yield</div>
+                    <div style={{ fontSize: 10, color: 'rgba(26,47,26,0.4)', marginTop: 1 }}>{fmtPct(p.results.grossYield)} yield</div>
                   </div>
                 </div>
               ))}
-              <Link href="/analyser" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px', background: 'rgba(0,212,170,0.08)', borderRadius: 10, fontSize: 12, fontWeight: 600, color: '#00A888', textDecoration: 'none', border: '1px dashed rgba(0,212,170,0.3)' }}>
+              <Link href="/analyser" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px', background: 'rgba(201,150,58,0.08)', borderRadius: 10, fontSize: 12, fontWeight: 600, color: '#A67C2E', textDecoration: 'none', border: '1px dashed rgba(201,150,58,0.3)' }}>
                 + Analyse another property
               </Link>
             </div>
@@ -91,28 +91,28 @@ export default function DashboardPage() {
               { icon: '↗', label: 'CGT Planner', desc: 'Compare sell now vs hold scenarios', href: '/cgt', teal: false },
               { icon: '📈', label: 'Multi-property view', desc: 'Full portfolio dashboard with charts', href: '/portfolio', teal: true },
             ].map(t => (
-              <Link key={t.href} href={t.href} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 18px', background: t.teal ? '#0F1E3C' : 'white', borderRadius: 14, border: t.teal ? 'none' : '1px solid rgba(15,30,60,0.1)', textDecoration: 'none' }}>
-                <div style={{ fontSize: 20, width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', background: t.teal ? 'rgba(0,212,170,0.15)' : '#F5F4F0', borderRadius: 10, flexShrink: 0 }}>{t.icon}</div>
+              <Link key={t.href} href={t.href} style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '16px 18px', background: t.teal ? '#1A2F1A' : 'white', borderRadius: 14, border: t.teal ? 'none' : '1px solid rgba(26,47,26,0.1)', textDecoration: 'none' }}>
+                <div style={{ fontSize: 20, width: 36, height: 36, display: 'flex', alignItems: 'center', justifyContent: 'center', background: t.teal ? 'rgba(201,150,58,0.15)' : '#F7F4EE', borderRadius: 10, flexShrink: 0 }}>{t.icon}</div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: t.teal ? 'white' : '#0F1E3C' }}>{t.label}</div>
-                  <div style={{ fontSize: 11, color: t.teal ? 'rgba(255,255,255,0.45)' : 'rgba(15,30,60,0.5)', marginTop: 2 }}>{t.desc}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: t.teal ? 'white' : '#1A2F1A' }}>{t.label}</div>
+                  <div style={{ fontSize: 11, color: t.teal ? 'rgba(255,255,255,0.45)' : 'rgba(26,47,26,0.5)', marginTop: 2 }}>{t.desc}</div>
                 </div>
-                <div style={{ fontSize: 14, color: t.teal ? '#00D4AA' : 'rgba(15,30,60,0.3)' }}>→</div>
+                <div style={{ fontSize: 14, color: t.teal ? '#C9963A' : 'rgba(26,47,26,0.3)' }}>→</div>
               </Link>
             ))}
 
             {/* Upgrade prompt */}
-            <div style={{ padding: '16px 18px', background: 'rgba(0,212,170,0.06)', borderRadius: 14, border: '1px solid rgba(0,212,170,0.2)' }}>
+            <div style={{ padding: '16px 18px', background: 'rgba(201,150,58,0.06)', borderRadius: 14, border: '1px solid rgba(201,150,58,0.2)' }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: '#065F46', marginBottom: 4 }}>🔒 Subscriber tools locked</div>
-              <div style={{ fontSize: 11, color: 'rgba(15,30,60,0.5)', marginBottom: 10, lineHeight: 1.5 }}>Scenario comparison, broker reports, AI explanations, rate stress tester and more.</div>
-              <Link href="/pricing" style={{ display: 'inline-block', padding: '7px 14px', background: '#00D4AA', borderRadius: 8, fontSize: 11, fontWeight: 700, color: '#0F1E3C', textDecoration: 'none' }}>
+              <div style={{ fontSize: 11, color: 'rgba(26,47,26,0.5)', marginBottom: 10, lineHeight: 1.5 }}>Scenario comparison, broker reports, AI explanations, rate stress tester and more.</div>
+              <Link href="/pricing" style={{ display: 'inline-block', padding: '7px 14px', background: '#C9963A', borderRadius: 8, fontSize: 11, fontWeight: 700, color: '#1A2F1A', textDecoration: 'none' }}>
                 Upgrade — from $29/month →
               </Link>
             </div>
           </div>
         </div>
 
-        <p style={{ fontSize: 11, color: 'rgba(15,30,60,0.3)', textAlign: 'center' }}>
+        <p style={{ fontSize: 11, color: 'rgba(26,47,26,0.3)', textAlign: 'center' }}>
           Sample portfolio shown. Sign up to save and track your real properties. General information only — not financial advice.
         </p>
       </div>

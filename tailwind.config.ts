@@ -6,21 +6,22 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          DEFAULT: '#0F1E3C',
-          mid: '#1A3057',
-          light: '#243D6B',
+        forest: {
+          DEFAULT: '#1A2F1A',  // deep forest green (replaces navy)
+          mid: '#243524',      // mid forest
+          light: '#2E4A2E',    // lighter forest
         },
-        teal: {
-          DEFAULT: '#00D4AA',
-          dim: '#00A888',
+        gold: {
+          DEFAULT: '#C9963A',  // warm gold (replaces teal)
+          dim: '#A67C2E',      // deeper gold
+          light: '#E8B86D',    // lighter gold
         },
-        surface: {
-          DEFAULT: '#F5F4F0',
-          2: '#ECEAE4',
+        cream: {
+          DEFAULT: '#F7F4EE',  // warm cream (replaces #F5F4F0)
+          2: '#EDE8DF',        // deeper cream
         },
-        slate: {
-          DEFAULT: '#8A9BB5',
+        sage: {
+          DEFAULT: '#7A9B7A',  // muted sage for secondary text
         },
       },
       fontFamily: {

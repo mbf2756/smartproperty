@@ -28,10 +28,10 @@ export default function SettingsPage() {
   }
 
   const S = {
-    card: { background: 'white', borderRadius: 16, padding: '28px', border: '1px solid rgba(15,30,60,0.1)', marginBottom: 16 } as React.CSSProperties,
-    label: { display: 'block', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.08em', color: 'rgba(15,30,60,0.5)', marginBottom: 6 },
-    input: { width: '100%', padding: '10px 14px', border: '1px solid rgba(15,30,60,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#0F1E3C', outline: 'none', boxSizing: 'border-box' as const },
-    sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(15,30,60,0.4)', marginBottom: 18 },
+    card: { background: 'white', borderRadius: 16, padding: '28px', border: '1px solid rgba(26,47,26,0.1)', marginBottom: 16 } as React.CSSProperties,
+    label: { display: 'block', fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.08em', color: 'rgba(26,47,26,0.5)', marginBottom: 6 },
+    input: { width: '100%', padding: '10px 14px', border: '1px solid rgba(26,47,26,0.12)', borderRadius: 10, fontFamily: 'monospace', fontSize: 14, color: '#1A2F1A', outline: 'none', boxSizing: 'border-box' as const },
+    sectionLabel: { fontSize: 11, fontWeight: 600, textTransform: 'uppercase' as const, letterSpacing: '0.06em', color: 'rgba(26,47,26,0.4)', marginBottom: 18 },
   }
 
   return (
@@ -66,10 +66,10 @@ export default function SettingsPage() {
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <button type="submit"
-                style={{ padding: '9px 20px', borderRadius: 10, background: '#0F1E3C', color: '#00D4AA', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
+                style={{ padding: '9px 20px', borderRadius: 10, background: '#1A2F1A', color: '#C9963A', fontWeight: 700, fontSize: 13, border: 'none', cursor: 'pointer' }}>
                 Save changes
               </button>
-              {saved && <span style={{ fontSize: 12, color: '#00A888', fontWeight: 600 }}>✓ Saved</span>}
+              {saved && <span style={{ fontSize: 12, color: '#A67C2E', fontWeight: 600 }}>✓ Saved</span>}
             </div>
           </form>
         </div>
@@ -87,7 +87,7 @@ export default function SettingsPage() {
               <input type="password" placeholder="Min. 8 characters" style={S.input} />
             </div>
           </div>
-          <button style={{ padding: '9px 20px', borderRadius: 10, background: '#F5F4F0', color: '#0F1E3C', fontWeight: 700, fontSize: 13, border: '1px solid rgba(15,30,60,0.12)', cursor: 'pointer' }}>
+          <button style={{ padding: '9px 20px', borderRadius: 10, background: '#F7F4EE', color: '#1A2F1A', fontWeight: 700, fontSize: 13, border: '1px solid rgba(26,47,26,0.12)', cursor: 'pointer' }}>
             Update password
           </button>
         </div>
@@ -95,24 +95,24 @@ export default function SettingsPage() {
         {/* Subscription */}
         <div style={S.card}>
           <div style={S.sectionLabel}>Subscription</div>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: '#F5F4F0', borderRadius: 12, marginBottom: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '14px 16px', background: '#F7F4EE', borderRadius: 12, marginBottom: 16 }}>
             <div>
-              <div style={{ fontSize: 14, fontWeight: 700, color: '#0F1E3C' }}>Free plan</div>
-              <div style={{ fontSize: 12, color: 'rgba(15,30,60,0.5)', marginTop: 2 }}>3 tools included · Upgrade to unlock all features</div>
+              <div style={{ fontSize: 14, fontWeight: 700, color: '#1A2F1A' }}>Free plan</div>
+              <div style={{ fontSize: 12, color: 'rgba(26,47,26,0.5)', marginTop: 2 }}>3 tools included · Upgrade to unlock all features</div>
             </div>
-            <a href="/pricing" style={{ padding: '8px 16px', background: '#00D4AA', borderRadius: 10, fontSize: 13, fontWeight: 800, color: '#0F1E3C', textDecoration: 'none' }}>
+            <a href="/pricing" style={{ padding: '8px 16px', background: '#C9963A', borderRadius: 10, fontSize: 13, fontWeight: 800, color: '#1A2F1A', textDecoration: 'none' }}>
               Upgrade →
             </a>
           </div>
           <button onClick={openBillingPortal} disabled={portalLoading}
-            style={{ padding: '9px 20px', borderRadius: 10, background: '#F5F4F0', color: '#0F1E3C', fontWeight: 600, fontSize: 13, border: '1px solid rgba(15,30,60,0.12)', cursor: portalLoading ? 'not-allowed' : 'pointer', opacity: portalLoading ? 0.6 : 1 }}>
+            style={{ padding: '9px 20px', borderRadius: 10, background: '#F7F4EE', color: '#1A2F1A', fontWeight: 600, fontSize: 13, border: '1px solid rgba(26,47,26,0.12)', cursor: portalLoading ? 'not-allowed' : 'pointer', opacity: portalLoading ? 0.6 : 1 }}>
             {portalLoading ? 'Opening…' : 'Manage billing & invoices →'}
           </button>
         </div>
 
         {/* Smart Suite */}
-        <div style={{ ...S.card, background: '#0F1E3C' }}>
-          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#00D4AA', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 10 }}>Smart Suite</div>
+        <div style={{ ...S.card, background: '#1A2F1A' }}>
+          <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#C9963A', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: 10 }}>Smart Suite</div>
           <div style={{ fontSize: 15, fontWeight: 700, color: 'white', marginBottom: 6 }}>One login. Three platforms.</div>
           <div style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.6, marginBottom: 16 }}>
             Your SmartProperty account works across SmartETF and SmartSuper. Bundle all three and save 20%.
@@ -129,7 +129,7 @@ export default function SettingsPage() {
         {/* Danger zone */}
         <div style={{ ...S.card, border: '1px solid rgba(239,68,68,0.2)', background: 'rgba(239,68,68,0.03)' }}>
           <div style={{ ...S.sectionLabel, color: '#B91C1C' }}>Account</div>
-          <div style={{ fontSize: 13, color: 'rgba(15,30,60,0.5)', marginBottom: 12, lineHeight: 1.5 }}>
+          <div style={{ fontSize: 13, color: 'rgba(26,47,26,0.5)', marginBottom: 12, lineHeight: 1.5 }}>
             Deleting your account is permanent and removes all saved properties and calculations.
           </div>
           <button style={{ padding: '8px 16px', borderRadius: 10, background: 'rgba(239,68,68,0.08)', color: '#B91C1C', fontWeight: 600, fontSize: 12, border: '1px solid rgba(239,68,68,0.2)', cursor: 'pointer' }}>
