@@ -20,7 +20,7 @@ export async function POST(request: Request) {
     if (!priceId) {
       console.error(`${priceEnvKey} is not set in environment`)
       return NextResponse.json(
-        { error: `Stripe error: ${priceEnvKey} is not configured. Please contact support@smartproperty.com.au` },
+        { error: `Stripe error: ${priceEnvKey} is not configured. Please contact support@smartproperty-delta.vercel.app` },
         { status: 503 }
       )
     }
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Stripe error: STRIPE_SECRET_KEY is not configured.' }, { status: 503 })
     }
 
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://smartproperty.com.au'
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://smartproperty-delta.vercel.app'
     const stripe = getStripeInstance()
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

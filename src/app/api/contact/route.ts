@@ -36,9 +36,9 @@ export async function POST(request: Request) {
   }
 
   const resend = new Resend(process.env.RESEND_API_KEY)
-  const fromEmail = process.env.RESEND_FROM_EMAIL || 'hello@smartproperty.com.au'
-  const toEmail   = process.env.CONTACT_TO_EMAIL  || 'support@smartproperty.com.au'
-  const appUrl    = process.env.NEXT_PUBLIC_APP_URL || 'https://smartproperty.com.au'
+  const fromEmail = process.env.RESEND_FROM_EMAIL || 'hello@smartproperty-delta.vercel.app'
+  const toEmail   = process.env.CONTACT_TO_EMAIL  || 'support@smartproperty-delta.vercel.app'
+  const appUrl    = process.env.NEXT_PUBLIC_APP_URL || 'https://smartproperty-delta.vercel.app'
 
   // Notification to SmartProperty team
   await resend.emails.send({

@@ -19,7 +19,7 @@ export async function POST() {
     }
 
     const stripe = getStripeInstance()
-    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://smartproperty.com.au'
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://smartproperty-delta.vercel.app'
     const session = await stripe.billingPortal.sessions.create({
       customer: sub.stripe_customer_id,
       return_url: `${appUrl}/settings`,
