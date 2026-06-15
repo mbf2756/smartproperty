@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 const NAV = [
   { group: 'Free tools', items: [
@@ -19,16 +20,51 @@ const NAV = [
   ]},
 ]
 
-export function Sidebar({ isPaid = false }: { isPaid?: boolean }) {
-  const pathname = usePathname()
+const ALL_PAID_PLANS = [
+  'optimiser', 'retirement', 'optimiser_quarterly',
+  'single_smartsuper', 'single_smartetf', 'single_smartproperty',
+  'double_ss_se', 'double_ss_sp', 'double_se_sp',
+  'triple_all',
+]
 
-  // Colour tokens
-  const bg       = '#1A2F1A'
-  const bgMid    = '#243524'
-  const gold     = '#C9963A'
-  const goldDim  = '#A67C2E'
-  const goldLight = '#E8B86D'
-  const sage     = '#7A9B7A'
+function checkAccess(sub: { apps?: string[]; plan?: string; status?: string } | null): boolean {
+  if (!sub || sub.status !== 'active') return false
+  if (Array.isArray(sub.apps) && sub.apps.includes('smartproperty')) return true
+  if (sub.plan === 'triple_all') return true
+  if (sub.plan && ALL_PAID_PLANS.includes(sub.plan)) return true
+  return false
+}
+
+export function Sidebar() {
+  const pathname = usePathname()
+  const [isPaid, setIsPaid]   = useState(false)
+  const [checked, setChecked] = useState(false)
+
+  useEffect(() => {
+    async function loadSub() {
+      try {
+        const { createClient } = await import('@/lib/supabase/client')
+        const supabase = createClient()
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) { setChecked(true); return }
+        const { data } = await supabase
+          .from('subscriptions')
+          .select('plan, apps, bundle, status')
+          .eq('user_id', user.id)
+          .single()
+        setIsPaid(checkAccess(data))
+      } catch (e) {
+        console.error('Sidebar sub check:', e)
+      }
+      setChecked(true)
+    }
+    loadSub()
+  }, [])
+
+  const bg      = '#1A2F1A'
+  const gold    = '#C9963A'
+  const goldDim = '#A67C2E'
+  const sage    = '#7A9B7A'
 
   return (
     <nav className="w-[220px] min-h-screen flex flex-col fixed left-0 top-0 bottom-0 z-50"
@@ -88,7 +124,7 @@ export function Sidebar({ isPaid = false }: { isPaid?: boolean }) {
               )
             })}
 
-            {group.group === 'Subscriber tools' && !isPaid && (
+            {group.group === 'Subscriber tools' && !isPaid && checked && (
               <Link href="/pricing"
                 className="mx-4 mt-2 mb-1 flex items-center justify-center gap-1.5 rounded-xl py-2 text-[11px] font-semibold transition-all hover:opacity-90"
                 style={{ background: 'rgba(201,150,58,0.12)', color: gold, textDecoration: 'none', border: '1px solid rgba(201,150,58,0.2)' }}>
@@ -102,12 +138,14 @@ export function Sidebar({ isPaid = false }: { isPaid?: boolean }) {
       {/* Footer */}
       <div className="px-4 py-4" style={{ borderTop: '1px solid rgba(255,255,255,0.08)' }}>
         <div className="flex items-center gap-2 mb-3">
-          <span style={{ fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 20,
+          <span style={{
+            fontSize: 11, fontWeight: 600, padding: '4px 10px', borderRadius: 20,
             background: isPaid ? 'rgba(201,150,58,0.15)' : 'rgba(255,255,255,0.08)',
-            color:      isPaid ? gold : sage }}>
-            {isPaid ? 'Subscriber ✓' : 'Free plan'}
+            color:      isPaid ? gold : sage,
+          }}>
+            {!checked ? '…' : isPaid ? 'Subscriber ✓' : 'Free plan'}
           </span>
-          {!isPaid && (
+          {checked && !isPaid && (
             <Link href="/pricing" style={{ fontSize: 11, fontWeight: 600, color: gold, textDecoration: 'none' }}>
               Upgrade →
             </Link>
@@ -115,9 +153,11 @@ export function Sidebar({ isPaid = false }: { isPaid?: boolean }) {
         </div>
 
         <Link href="/login"
-          style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 10,
+          style={{
+            display: 'flex', alignItems: 'center', gap: 8, padding: '8px 12px', borderRadius: 10,
             fontSize: 12, fontWeight: 600, color: '#FCA5A5', textDecoration: 'none',
-            background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)' }}>
+            background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)',
+          }}>
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0 }}>
             <path d="M5 1.5H2.5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1H5M9 9.5l2.5-3L9 3.5M11.5 6.5H5"
               stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
