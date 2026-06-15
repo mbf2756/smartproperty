@@ -82,7 +82,12 @@ export function getUpgradePaths(currentApps: string[]): typeof BUNDLES[BundleId]
   })
 }
 
-export const LEGACY_PAID_PLANS = ['optimiser', 'retirement', 'optimiser_quarterly']
+export const ALL_PAID_PLANS = [
+  'optimiser', 'retirement', 'optimiser_quarterly',
+  'single_smartsuper', 'single_smartetf', 'single_smartproperty',
+  'double_ss_se', 'double_ss_sp', 'double_se_sp',
+  'triple_all',
+]
 
 export function hasAppAccess(subscription: {
   apps?: string[]
@@ -92,12 +97,14 @@ export function hasAppAccess(subscription: {
   if (!subscription) return false
   if (subscription.status !== 'active') return false
 
-  // New bundle system — check apps array
-  if (subscription.apps && subscription.apps.includes(app)) return true
+  // 1. Check apps array directly
+  if (Array.isArray(subscription.apps) && subscription.apps.includes(app)) return true
 
-  // Legacy: any paid Smart Suite plan grants access to ALL apps
-  // This covers existing SmartSuper subscribers who haven't been migrated yet
-  if (subscription.plan && LEGACY_PAID_PLANS.includes(subscription.plan)) return true
+  // 2. Triple bundle grants all apps
+  if (subscription.plan === 'triple_all') return true
+
+  // 3. Any recognised paid plan grants access (covers pre-Stripe setup period)
+  if (subscription.plan && ALL_PAID_PLANS.includes(subscription.plan)) return true
 
   return false
 }
