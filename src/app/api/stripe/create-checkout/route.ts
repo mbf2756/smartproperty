@@ -1,32 +1,37 @@
-import { getStripeInstance } from '@/lib/stripe'
+// src/app/api/stripe/create-checkout/route.ts
+// Drop this file into SmartSuper, SmartETF, and SmartProperty — identical across all 3
+// Each app's Vercel env vars provide the price IDs
+
+import { getStripeInstance, BUNDLES, type BundleId } from '@/lib/stripe-bundles'
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
   try {
-    const { plan, billing = 'yearly', couponCode } = await request.json()
+    const { bundleId, couponCode } = await request.json()
 
+    // Validate bundle
+    const bundle = BUNDLES[bundleId as BundleId]
+    if (!bundle) {
+      return NextResponse.json({ error: `Unknown bundle: ${bundleId}` }, { status: 400 })
+    }
+
+    // Auth check
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return NextResponse.json({ error: 'Unauthorised' }, { status: 401 })
 
-    // Select price ID based on plan and billing period
-    const priceEnvKey = billing === 'monthly'
-      ? `STRIPE_PRICE_${plan?.toUpperCase()}_MONTHLY`
-      : `STRIPE_PRICE_${plan?.toUpperCase()}_YEARLY`
-
-    const priceId = process.env[priceEnvKey]
-
-    if (!priceId) {
-      console.error(`${priceEnvKey} is not set in environment`)
+    // Validate price ID exists
+    if (!bundle.priceId) {
+      console.error(`Price ID missing for bundle: ${bundleId}`)
       return NextResponse.json(
-        { error: `Stripe error: ${priceEnvKey} is not configured. Please contact support@smartproperty-delta.vercel.app` },
+        { error: `Stripe not configured for this bundle. Please contact support.` },
         { status: 503 }
       )
     }
 
     if (!process.env.STRIPE_SECRET_KEY) {
-      return NextResponse.json({ error: 'Stripe error: STRIPE_SECRET_KEY is not configured.' }, { status: 503 })
+      return NextResponse.json({ error: 'Stripe is not configured.' }, { status: 503 })
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://smartproperty-delta.vercel.app'
@@ -35,16 +40,27 @@ export async function POST(request: Request) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const sessionParams: any = {
       payment_method_types: ['card'],
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [{ price: bundle.priceId, quantity: 1 }],
       mode: 'subscription',
-      success_url: `${appUrl}/dashboard?upgraded=true`,
+      success_url: `${appUrl}/dashboard?upgraded=true&bundle=${bundleId}`,
       cancel_url: `${appUrl}/pricing`,
       customer_email: user.email,
-      metadata: { userId: user.id, plan: plan ?? 'investor', billing },
-      subscription_data: { metadata: { userId: user.id, plan: plan ?? 'investor', billing } },
+      metadata: {
+        userId: user.id,
+        bundleId,
+        apps: bundle.apps.join(','),
+      },
+      subscription_data: {
+        metadata: {
+          userId: user.id,
+          bundleId,
+          apps: bundle.apps.join(','),
+        },
+      },
       allow_promotion_codes: true,
     }
 
+    // Apply coupon code if provided
     if (couponCode) {
       try {
         const promoCodes = await stripe.promotionCodes.list({ code: couponCode, active: true, limit: 1 })
@@ -56,7 +72,7 @@ export async function POST(request: Request) {
         }
       } catch (err) {
         console.error('Coupon error:', err)
-        return NextResponse.json({ error: 'Could not apply coupon. Please try without it.' }, { status: 400 })
+        return NextResponse.json({ error: 'Could not apply coupon.' }, { status: 400 })
       }
     }
 

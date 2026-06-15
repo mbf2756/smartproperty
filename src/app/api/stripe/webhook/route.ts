@@ -1,4 +1,7 @@
-import { getStripeInstance } from '@/lib/stripe'
+// src/app/api/stripe/webhook/route.ts
+// Drop this into SmartSuper, SmartETF, and SmartProperty — identical across all 3
+
+import { getStripeInstance } from '@/lib/stripe-bundles'
 import { headers } from 'next/headers'
 import { NextResponse } from 'next/server'
 
@@ -22,34 +25,64 @@ export async function POST(request: Request) {
   )
 
   switch (event.type) {
+
     case 'checkout.session.completed': {
       const session = event.data.object
-      const userId = session.metadata?.userId
+      const userId   = session.metadata?.userId
+      const bundleId = session.metadata?.bundleId
+      const apps     = session.metadata?.apps?.split(',') ?? []
+
       if (!userId) break
+
+      // Determine bundle tier label
+      const appCount = apps.length
+      const bundle = appCount >= 3 ? 'triple' : appCount === 2 ? 'double' : 'single'
+
       await supabaseAdmin.from('subscriptions').update({
-        stripe_customer_id: session.customer,
+        stripe_customer_id:     session.customer,
         stripe_subscription_id: session.subscription,
-        plan: session.metadata?.plan ?? 'investor',
-        status: 'active',
+        plan:    bundleId ?? 'bundle',   // keep for legacy compat
+        apps:    apps,                   // NEW: array of active apps
+        bundle:  bundle,
+        status:  'active',
         updated_at: new Date().toISOString(),
       }).eq('user_id', userId)
+
+      console.log(`✓ Subscription activated: user=${userId} bundle=${bundle} apps=${apps.join(',')}`)
       break
     }
+
     case 'customer.subscription.updated': {
       const sub = event.data.object
-      await supabaseAdmin.from('subscriptions').update({
+      // Apps array comes from subscription metadata
+      const apps = sub.metadata?.apps?.split(',').filter(Boolean) ?? []
+      const appCount = apps.length
+      const bundle = appCount >= 3 ? 'triple' : appCount === 2 ? 'double' : appCount === 1 ? 'single' : 'none'
+
+      const updatePayload: Record<string, unknown> = {
         status: sub.status,
         current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
         cancel_at_period_end: sub.cancel_at_period_end,
         updated_at: new Date().toISOString(),
-      }).eq('stripe_subscription_id', sub.id)
+      }
+      if (apps.length > 0) {
+        updatePayload.apps   = apps
+        updatePayload.bundle = bundle
+      }
+
+      await supabaseAdmin.from('subscriptions')
+        .update(updatePayload)
+        .eq('stripe_subscription_id', sub.id)
       break
     }
+
     case 'customer.subscription.deleted': {
       const sub = event.data.object
       await supabaseAdmin.from('subscriptions').update({
-        plan: 'free',
-        status: 'active',
+        plan:   'free',
+        apps:   [],
+        bundle: 'none',
+        status: 'active',   // keep row active but downgraded
         updated_at: new Date().toISOString(),
       }).eq('stripe_subscription_id', sub.id)
       break
