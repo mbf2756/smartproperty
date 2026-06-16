@@ -4,8 +4,21 @@ import Link from 'next/link'
 import { calculateProperty, fmtCurrency, fmtPct, SAMPLE_PROPERTIES } from '@/lib/calculations'
 import { DashboardTopbar } from '@/components/DashboardTopbar'
 import { ResultBox, ResultRow } from '@/components/ui/ResultBox'
+import { useTier } from '@/hooks/useTier'
+import { LockedPage } from '@/components/PaywallOverlay'
 
 export default function PortfolioPage() {
+
+  const { isPaid, checked } = useTier()
+  if (checked && !isPaid) {
+    return (
+      <div>
+        <DashboardTopbar title="Multi-property View" subtitle="Investor plan required" />
+        <LockedPage title="Multi-property View" icon="📈" description="Track up to 10 investment properties. Aggregate equity, total cash flow, combined tax refunds, and 10-year portfolio growth projection — all in one view." plan="investor" />
+      </div>
+    )
+  }
+
   const [properties, setProperties] = useState(SAMPLE_PROPERTIES)
 
   const portfolio = useMemo(() =>
